@@ -87,6 +87,7 @@ public class World {
                 StringTokenizer tokens = new StringTokenizer(line);
 
                 for (int y = 0; y < rows; y++) {
+
                     for (int x = 0; x < cols; x++) {
                         int tileID = Integer.parseInt(tokens.nextToken());
 
@@ -98,7 +99,7 @@ public class World {
                             throw new Exception("The map file for level " + level + " references non-existing tile with ID " + tileID);
                         }
 
-                        map[y][x] = new Block(y, x, currentTile, false);
+                        map[y][x] = new Block(y, x, currentTile);
                     }
                 }
             }
