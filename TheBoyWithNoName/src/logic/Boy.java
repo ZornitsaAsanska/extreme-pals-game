@@ -36,8 +36,8 @@ public class Boy {
     /* **************************** */
 
     // The initial position of the character
-    public static final int BOY_START_X = 2 * Settings.TILE_SIZE;
-    public static final int BOY_START_Y = 6 * Settings.TILE_SIZE;
+    public static final int BOY_START_X = 0 * Settings.TILE_SIZE;
+    public static final int BOY_START_Y = 7 * Settings.TILE_SIZE;
     // The current position of the character
     private int currentX;
     private int currentY;
@@ -115,6 +115,7 @@ public class Boy {
     public void resetPosition() {
         currentX = BOY_START_X;
         currentY = BOY_START_Y;
+        
 
         boundingBox = new Rectangle(BOY_START_X, currentY, BOY_WIDTH, BOY_HEIGHT);
 
@@ -190,6 +191,15 @@ public class Boy {
         // Attempt to move left by DISPLACEMENT amount
         currentX = checkMove(currentX, currentX - DISPLACEMENT, isLastLevel);
         boundingBox.setLocation(currentX, currentY);
+        
+        // Change the current frame in animation
+        if (!jumping && !falling) {
+            setFrameNumber();
+            currentFrame = run_L[currentFrameNumber];
+        } else {
+            currentFrame = run_L[0];
+        }
+        moveCounter++;
     }
 
     public void moveRight(boolean isLastLevel) {
@@ -199,6 +209,10 @@ public class Boy {
         // Attempt to move right by DISPLACEMENT amount
         currentX = checkMove(currentX, currentX + DISPLACEMENT, isLastLevel);
         boundingBox.setLocation(currentX, currentY);
+        
+        setFrameNumber();
+        currentFrame = run_R[currentFrameNumber];
+        moveCounter++;
     }
 
     // Check whether the location the player wants to move into
@@ -251,35 +265,38 @@ public class Boy {
     }
 
     // Called every time the player presses the jump key
+    // Does nothing if the character is already jumping or falling
     public void startJumping() {
 
         if (!jumping && !falling) {
-            jumping = true;
+        	jumping = true;
             
+            //Reinitialise  the jump_count, useful to determine for how
+        	//Much time the character is going to stay in the air
             jump_count = 0;
         }
+    } 
 
-    }
+
 
     // Increments the jumping counter and moves character up if jumping
     // Check the comments above 'jumping' and 'jump_count' variables
     // For more details
+
     public void handleJumping() {
         if (jumping) {
-
-        	if(jump_count < JUMP_COUNTER_THRESH && currentY - DISPLACEMENT >=0) {
-        	currentY-=DISPLACEMENT;
-        	boundingBox.setLocation(currentX, currentY);
-
-        	}
-        	
-            jump_count++;
+            if (jump_count < JUMP_COUNTER_THRESH && currentY - DISPLACEMENT >= 0) {
+            	currentY -= DISPLACEMENT;
+            	boundingBox.setLocation(currentX,currentY);
+            }
             
-
+            jump_count ++;
+            
             if (jump_count >= JUMP_COUNTER_THRESH) {
-                jumping = false;
-                jump_count = 0;
-                falling = true;
+            	jumping = false;
+            	jump_count = 0;
+            	falling = true;
+
             }
 
             checkBlockCollisions();
@@ -416,10 +433,12 @@ public class Boy {
     	pearlCounter+=1;
     }
     
+
     public boolean collectedAll() {
     	if(pearlCounter==MAX_PEARL_NUMBER) {
     		return true;
     	} return false;
+
     }
 
     /* ******* */

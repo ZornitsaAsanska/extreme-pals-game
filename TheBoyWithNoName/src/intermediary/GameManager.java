@@ -67,8 +67,10 @@ public class GameManager extends Thread {
                 boy.handleFalling();
                 boy.handleJumping();
                 boy.checkRestoringCount();
+
                 gameIsRunning = boy.isAlive();
                 gameIsRunning = !boy.collectedAll();
+
             }
 
             manageKeys();
@@ -111,14 +113,15 @@ public class GameManager extends Thread {
                 boy.moveLeft(isLastLevel());
             }
 
-            if(currentKeys.contains(KeyEvent.VK_SPACE)) {
+
+            // If jump key is pressed - make the boy jump
+
+            if (currentKeys.contains(KeyEvent.VK_SPACE)) {
+
             	boy.startJumping();
             }
-            
-            if(!currentKeys.contains(KeyEvent.VK_SPACE)) {
-            	boy.handleFalling();
-            }
 
+            
             // If the player is not pressing any keys, make the boy stand still
             else if (currentKeys.isEmpty() && !boy.getJumping() && !boy.getFalling()) {
                 boy.stop();
