@@ -115,6 +115,7 @@ public class Boy {
     public void resetPosition() {
         currentX = BOY_START_X;
         currentY = BOY_START_Y;
+        
 
         boundingBox = new Rectangle(BOY_START_X, currentY, BOY_WIDTH, BOY_HEIGHT);
 
@@ -187,6 +188,15 @@ public class Boy {
         // Attempt to move left by DISPLACEMENT amount
         currentX = checkMove(currentX, currentX - DISPLACEMENT, isLastLevel);
         boundingBox.setLocation(currentX, currentY);
+        
+        // Change the current frame in animation
+        if (!jumping && !falling) {
+            setFrameNumber();
+            currentFrame = run_L[currentFrameNumber];
+        } else {
+            currentFrame = run_L[0];
+        }
+        moveCounter++;
     }
 
     public void moveRight(boolean isLastLevel) {
@@ -196,6 +206,10 @@ public class Boy {
         // Attempt to move right by DISPLACEMENT amount
         currentX = checkMove(currentX, currentX + DISPLACEMENT, isLastLevel);
         boundingBox.setLocation(currentX, currentY);
+        
+        setFrameNumber();
+        currentFrame = run_R[currentFrameNumber];
+        moveCounter++;
     }
 
     // Check whether the location the player wants to move into
@@ -256,6 +270,16 @@ public class Boy {
     	if(!jumping && !falling) {
     		jumping = true;
     	}
+    	// Reinitialise the jump_count, useful to determine for how
+        // Much time the character is going to stay in the air
+        jump_count = 0;
+
+        // Sets the current jumping frame based on the last direction
+        if (facingDirection == KeyEvent.VK_RIGHT) {
+            currentFrame = run_R[2];
+        } else {
+            currentFrame = run_L[2];
+        }
     } 
 
     // Increments the jumping counter and moves character up if jumping

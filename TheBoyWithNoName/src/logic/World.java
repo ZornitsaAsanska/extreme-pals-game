@@ -22,6 +22,7 @@ public class World {
     public static int           cols;
 
     public World() {
+    	
         tileset = new Tileset();
     }
 
