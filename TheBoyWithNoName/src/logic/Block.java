@@ -11,7 +11,7 @@ public class Block {
     private int col;
     private Tile tile;
     private Rectangle boundingBox;
-    private boolean passthrough; // determining whether the character can pass through the block
+    private final boolean passthrough; // determining whether the character can pass through the block
 
     public Block(int row, int col, Tile tile, boolean passthrough) {
         this.row = row * Settings.TILE_SIZE;

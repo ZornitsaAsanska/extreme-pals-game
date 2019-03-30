@@ -98,7 +98,7 @@ public class World {
                             throw new Exception("The map file for level " + level + " references non-existing tile with ID " + tileID);
                         }
 
-                        map[y][x] = new Block(y, x, currentTile, true);
+                        map[y][x] = new Block(y, x, currentTile, false);
                     }
                 }
             }
