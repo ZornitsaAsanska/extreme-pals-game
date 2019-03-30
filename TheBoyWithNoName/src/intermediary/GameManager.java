@@ -64,8 +64,8 @@ public class GameManager extends Thread {
                     boy.resetPosition();
                 }
 
-                // boy.handleFalling();
-                // boy.handleJumping();
+                boy.handleFalling();
+                boy.handleJumping();
                 boy.checkRestoringCount();
                 gameIsRunning = boy.isAlive();
             }
@@ -112,6 +112,10 @@ public class GameManager extends Thread {
 
             if(currentKeys.contains(KeyEvent.VK_SPACE)) {
             	boy.startJumping();
+            }
+            
+            if(!currentKeys.contains(KeyEvent.VK_SPACE)) {
+            	boy.handleFalling();
             }
 
             // If the player is not pressing any keys, make the boy stand still
