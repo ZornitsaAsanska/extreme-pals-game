@@ -8,7 +8,7 @@ import logic.KeyboardController;
 import logic.World;
 import gui.GameFrame;
 import gui.GamePanel;
-//this is the game manager
+
 // The GameManager is the main thread of the game
 // It redraws game window components when necessary
 // and manages pressed keys, associating them to actual actions
@@ -102,12 +102,12 @@ public class GameManager extends Thread {
         if (!paused) {
             // If right arrow is pressed - move the boy right
             if (currentKeys.contains(KeyEvent.VK_RIGHT)) {
-                boy.moveLeft(isLastLevel());
+                boy.moveRight(isLastLevel());
             }
 
             // If left arrow is pressed - move the boy left
             if (currentKeys.contains(KeyEvent.VK_LEFT)) {
-                boy.moveRight(isLastLevel());
+                boy.moveLeft(isLastLevel());
             }
 
             // If jump key is pressed - make the boy jump
