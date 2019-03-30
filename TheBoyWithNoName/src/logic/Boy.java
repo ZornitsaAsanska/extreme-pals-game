@@ -50,7 +50,7 @@ public class Boy {
 
     // Dimensions of the main character (used to set the boundingBox)
     private final int BOY_HEIGHT = 64;
-    private final int BOY_WIDTH  = 32;
+    private final int BOY_WIDTH  = 56;
 
     /* ******************* */
     /* Movement properties */
@@ -279,9 +279,11 @@ public class Boy {
 
 
 
+
     // Increments the jumping counter and moves character up if jumping
     // Check the comments above 'jumping' and 'jump_count' variables
     // For more details
+
 
     public void handleJumping() {
         if (jumping) {
