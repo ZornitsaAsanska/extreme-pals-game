@@ -111,6 +111,9 @@ public class GameManager extends Thread {
             }
 
             // If jump key is pressed - make the boy jump
+            if (currentKeys.contains(KeyEvent.VK_SPACE)) {
+            	boy.startJumping();
+            }
             // TODO: implement me!
 
             // If the player is not pressing any keys, make the boy stand still
