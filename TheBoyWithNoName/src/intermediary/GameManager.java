@@ -8,7 +8,7 @@ import logic.KeyboardController;
 import logic.World;
 import gui.GameFrame;
 import gui.GamePanel;
-
+//this is the game manager
 // The GameManager is the main thread of the game
 // It redraws game window components when necessary
 // and manages pressed keys, associating them to actual actions
