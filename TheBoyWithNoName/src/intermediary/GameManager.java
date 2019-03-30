@@ -102,16 +102,17 @@ public class GameManager extends Thread {
         if (!paused) {
             // If right arrow is pressed - move the boy right
             if (currentKeys.contains(KeyEvent.VK_RIGHT)) {
-                boy.moveLeft(isLastLevel());
+                boy.moveRight(isLastLevel());
             }
 
             // If left arrow is pressed - move the boy left
             if (currentKeys.contains(KeyEvent.VK_LEFT)) {
-                boy.moveRight(isLastLevel());
+                boy.moveLeft(isLastLevel());
             }
 
-            // If jump key is pressed - make the boy jump
-            // TODO: implement me!
+            if(currentKeys.contains(KeyEvent.VK_SPACE)) {
+            	boy.startJumping();
+            }
 
             // If the player is not pressing any keys, make the boy stand still
             else if (currentKeys.isEmpty() && !boy.getJumping() && !boy.getFalling()) {
