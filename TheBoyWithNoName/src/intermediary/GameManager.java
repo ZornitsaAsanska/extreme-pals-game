@@ -112,8 +112,9 @@ public class GameManager extends Thread {
 
 
             // If jump key is pressed - make the boy jump
-            // TODO: implement me!
+
             if (currentKeys.contains(KeyEvent.VK_SPACE)) {
+
             	boy.startJumping();
             }
 
