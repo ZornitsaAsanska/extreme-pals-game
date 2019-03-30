@@ -36,8 +36,8 @@ public class Boy {
     /* **************************** */
 
     // The initial position of the character
-    public static final int BOY_START_X = 2 * Settings.TILE_SIZE;
-    public static final int BOY_START_Y = 6 * Settings.TILE_SIZE;
+    public static final int BOY_START_X = 0 * Settings.TILE_SIZE;
+    public static final int BOY_START_Y = 7 * Settings.TILE_SIZE;
     // The current position of the character
     private int currentX;
     private int currentY;
@@ -261,50 +261,36 @@ public class Boy {
     // Does nothing if the character is already jumping or falling
     public void startJumping() {
 
-        /*if (currentY - DISPLACEMENT >= 0) {
+        if (!jumping && !falling) {
         	jumping = true;
-            currentY -= DISPLACEMENT;
-            boundingBox.setLocation(currentX, currentY);
             
+            //Reinitialise  the jump_count, useful to determine for how
+        	//Much time the character is going to stay in the air
             jump_count = 0;
-        }*/
-    	if(!jumping && !falling) {
-    		jumping = true;
-    	}
-    	// Reinitialise the jump_count, useful to determine for how
-        // Much time the character is going to stay in the air
-        jump_count = 0;
-
-        // Sets the current jumping frame based on the last direction
-        if (facingDirection == KeyEvent.VK_RIGHT) {
-            currentFrame = run_R[2];
-        } else {
-            currentFrame = run_L[2];
         }
     } 
 
-    
+
 
 
     // Increments the jumping counter and moves character up if jumping
     // Check the comments above 'jumping' and 'jump_count' variables
     // For more details
+
     public void handleJumping() {
-    	if (jumping) {
-            if (jump_count < JUMP_COUNTER_THRESH
-                && currentY - DISPLACEMENT >= 0) {
-                currentY -= DISPLACEMENT;
-                boundingBox.setLocation(currentX, currentY);
+        if (jumping) {
+            if (jump_count < JUMP_COUNTER_THRESH && currentY - DISPLACEMENT >= 0) {
+            	currentY -= DISPLACEMENT;
+            	boundingBox.setLocation(currentX,currentY);
             }
-
-
-            jump_count++;
             
+            jump_count ++;
+            
+            if (jump_count >= JUMP_COUNTER_THRESH) {
+            	jumping = false;
+            	jump_count = 0;
+            	falling = true;
 
-            if (jump_count >= JUMP_COUNTER_THRESH){
-                jumping = false;
-                jump_count = 0;
-                falling = true;
             }
 
             checkBlockCollisions();
