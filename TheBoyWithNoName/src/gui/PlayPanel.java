@@ -63,7 +63,7 @@ public class PlayPanel extends JPanel {
         // Draw the protagonist of the game
         if (boy != null && !boy.getRestoring()) {
             g2.drawImage(boy.getCurrentFrame(), boy.getCurrentX(), boy.getCurrentY(), null);
-            // g2.draw(boy.getBoundingBox());
+            //g2.draw(boy.getBoundingBox());
         }
     }
 }
