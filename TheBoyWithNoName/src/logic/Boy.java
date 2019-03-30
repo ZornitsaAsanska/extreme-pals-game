@@ -50,14 +50,14 @@ public class Boy {
 
     // Dimensions of the main character (used to set the boundingBox)
     private final int BOY_HEIGHT = 64;
-    private final int BOY_WIDTH  = 32;
+    private final int BOY_WIDTH  = 56;
 
     /* ******************* */
     /* Movement properties */
     /* ******************* */
 
     // DISPLACEMENT is the distance covered by a single step of the character
-    private static final int DISPLACEMENT = 4;
+    private static final int DISPLACEMENT = 8;
 
     // jump_count works with JUMP_COUNTER_THRESH: in particular this
     // Variable is incremented every time the main thread calls the checkState()

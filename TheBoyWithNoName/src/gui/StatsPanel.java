@@ -20,7 +20,7 @@ public class StatsPanel extends JPanel {
     private static final int LEFT_MARGIN = 5;
 
     private static final int HEARTS_X_DISTANCE = 60;
-    private static final int HEARTS_START_X    = 84;
+    private static final int HEARTS_START_X    = 1100;
     private static final int HEARTS_START_Y    = 4;
     private static final int HEARTS_SIZE       = 32;
     
@@ -57,12 +57,13 @@ public class StatsPanel extends JPanel {
         g2.setColor(Color.WHITE);
         g2.drawString("Score: ",10, 30);
         
+        
         if (boy != null) {
             for (int i = 0; i < boy.MAX_LIFE; ++i) {
                 if (boy.getLife() > i) {
-                    //g2.drawImage(livingHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
+                    g2.drawImage(livingHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
                 } else {
-                    //g2.drawImage(deadHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
+                    g2.drawImage(deadHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
                 }
             }
         }
