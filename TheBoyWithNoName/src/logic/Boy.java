@@ -57,7 +57,7 @@ public class Boy {
     /* ******************* */
 
     // DISPLACEMENT is the distance covered by a single step of the character
-    private static final int DISPLACEMENT = 4;
+    private static final int DISPLACEMENT = 8;
 
     // jump_count works with JUMP_COUNTER_THRESH: in particular this
     // Variable is incremented every time the main thread calls the checkState()
