@@ -283,13 +283,13 @@ public class Boy {
         }
     } 
 
-    }
+    
 
 
     // Increments the jumping counter and moves character up if jumping
     // Check the comments above 'jumping' and 'jump_count' variables
     // For more details
-    public void handleJumping() {s
+    public void handleJumping() {
     	if (jumping) {
             if (jump_count < JUMP_COUNTER_THRESH
                 && currentY - DISPLACEMENT >= 0) {
