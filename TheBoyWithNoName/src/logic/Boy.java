@@ -245,12 +245,13 @@ public class Boy {
 
     // Called every time the player presses the jump key
     public void startJumping() {
-    	if(!jumping && !falling) {
-    		jumping = true;
-    		
+
+        if (!jumping && !falling) {
+            jumping = true;
             
             jump_count = 0;
-    	}
+        }
+
     }
 
     // Increments the jumping counter and moves character up if jumping
@@ -258,9 +259,11 @@ public class Boy {
     // For more details
     public void handleJumping() {
         if (jumping) {
+
         	if(jump_count < JUMP_COUNTER_THRESH && currentY - DISPLACEMENT >=0) {
         	currentY-=DISPLACEMENT;
         	boundingBox.setLocation(currentX, currentY);
+
         	}
         	
             jump_count++;
