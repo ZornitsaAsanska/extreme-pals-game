@@ -127,6 +127,9 @@ public class Boy {
 
         idle = true;
     }
+    
+    private int pearlCounter=0;
+    private final int MAX_PEARL_NUMBER=20;
 
     public Boy() {
         // Initialise the buffers that will store the run sprites
@@ -147,7 +150,7 @@ public class Boy {
                                              Settings.BOY_SPRITE_WIDTH,
                                              Settings.BOY_SPRITE_HEIGHT);
 
-            for (int i = 0; i < Settings.BOY_RUN_FRAMES; i++) {
+                 for (int i = 0; i < Settings.BOY_RUN_FRAMES; i++) {
                 run_R[i] = spritesheet.getSubimage((i + 1) * Settings.BOY_SPRITE_WIDTH,
                                                    0,
                                                    Settings.BOY_SPRITE_WIDTH, 
@@ -250,7 +253,11 @@ public class Boy {
 
         Block tileInFrontOfFoot = World.map[footRow][footCol];
 
-        if (!tileInFrontOfFoot.empty() && tileInFrontOfFoot.intersects(boundingBox) && !tileInFrontOfFoot.isPassThrough()) {
+        if (!tileInFrontOfFoot.empty() && tileInFrontOfFoot.intersects(boundingBox) && !(tileInFrontOfFoot instanceof PassThroughBlock)) {
+        	if(tileInFrontOfFoot instanceof Pearl) {
+        		eat((Pearl) tileInFrontOfFoot);
+        		return newX;
+        	}
             return oldX;
         }
 
@@ -276,6 +283,7 @@ public class Boy {
     // Increments the jumping counter and moves character up if jumping
     // Check the comments above 'jumping' and 'jump_count' variables
     // For more details
+
 
     public void handleJumping() {
         if (jumping) {
@@ -325,11 +333,11 @@ public class Boy {
             rightCornerBlock = World.map[upRow][upRightCornerCol];
         }
 
-        if ((leftCornerBlock != null && !leftCornerBlock.empty() && leftCornerBlock.intersects(boundingBox) && !leftCornerBlock.isPassThrough())
-            || (rightCornerBlock != null && !rightCornerBlock.empty() && rightCornerBlock.intersects(boundingBox) && !rightCornerBlock.isPassThrough())) {
-            // If an upper corner is intersecting a block, stop the jumping
-            // phase
-            // And start the falling phase, setting the jump_count to 0
+        if ((leftCornerBlock != null && !leftCornerBlock.empty() && leftCornerBlock.intersects(boundingBox) && !(leftCornerBlock instanceof PassThroughBlock))
+            || (rightCornerBlock != null && !rightCornerBlock.empty() && rightCornerBlock.intersects(boundingBox) && !(leftCornerBlock instanceof PassThroughBlock))) {
+            if(leftCornerBlock instanceof Pearl) {
+            	eat((Pearl) leftCornerBlock);
+            }
             jumping = false;
             jump_count = 0;
             falling = true;
@@ -386,12 +394,15 @@ public class Boy {
         // If both of the tiles below the character are thin air or beyond map
         // edge
         // Make the character fall down DISPLACEMENT units
-        if ((lowLeftBlock == null || lowLeftBlock.empty() || lowLeftBlock.isPassThrough())
-            && (lowRightBlock == null || lowRightBlock.empty() || lowRightBlock.isPassThrough())) {
+        if ((lowLeftBlock == null || lowLeftBlock.empty() || (lowLeftBlock instanceof PassThroughBlock))
+            && (lowRightBlock == null || lowRightBlock.empty() || (lowRightBlock instanceof PassThroughBlock))) {
             falling = true;
             currentY += DISPLACEMENT;
             boundingBox.setLocation(currentX, currentY);
         } else {
+        	if(lowLeftBlock instanceof Pearl) {
+        		eat((Pearl)lowLeftBlock);
+        	}
             falling = false;
         }
     }
@@ -417,6 +428,19 @@ public class Boy {
         restoring = true;
         restoring_count = RESTORING_THRESH;
         life--;
+    }
+    
+    private void eat(Pearl pearl) {
+    	pearl.die();
+    	pearlCounter+=1;
+    }
+    
+
+    public boolean collectedAll() {
+    	if(pearlCounter==MAX_PEARL_NUMBER) {
+    		return true;
+    	} return false;
+
     }
 
     /* ******* */

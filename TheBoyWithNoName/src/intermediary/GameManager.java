@@ -67,7 +67,10 @@ public class GameManager extends Thread {
                 boy.handleFalling();
                 boy.handleJumping();
                 boy.checkRestoringCount();
+
                 gameIsRunning = boy.isAlive();
+                gameIsRunning = !boy.collectedAll();
+
             }
 
             manageKeys();
