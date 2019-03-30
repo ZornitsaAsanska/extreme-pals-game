@@ -115,6 +115,7 @@ public class Boy {
     public void resetPosition() {
         currentX = BOY_START_X;
         currentY = BOY_START_Y;
+        
 
         boundingBox = new Rectangle(BOY_START_X, currentY, BOY_WIDTH, BOY_HEIGHT);
 
@@ -187,6 +188,15 @@ public class Boy {
         // Attempt to move left by DISPLACEMENT amount
         currentX = checkMove(currentX, currentX - DISPLACEMENT, isLastLevel);
         boundingBox.setLocation(currentX, currentY);
+        
+        // Change the current frame in animation
+        if (!jumping && !falling) {
+            setFrameNumber();
+            currentFrame = run_L[currentFrameNumber];
+        } else {
+            currentFrame = run_L[0];
+        }
+        moveCounter++;
     }
 
     public void moveRight(boolean isLastLevel) {
@@ -196,6 +206,10 @@ public class Boy {
         // Attempt to move right by DISPLACEMENT amount
         currentX = checkMove(currentX, currentX + DISPLACEMENT, isLastLevel);
         boundingBox.setLocation(currentX, currentY);
+        
+        setFrameNumber();
+        currentFrame = run_R[currentFrameNumber];
+        moveCounter++;
     }
 
     // Check whether the location the player wants to move into
@@ -213,7 +227,7 @@ public class Boy {
 
         boundingBox.setLocation(newX, currentY);
 
-        // Get the tile position (in the tiled map)
+        // Get the tile positfalseion (in the tiled map)
         // Relative to the tile in front of the character
         int footCol;
 
@@ -236,7 +250,7 @@ public class Boy {
 
         Block tileInFrontOfFoot = World.map[footRow][footCol];
 
-        if (!tileInFrontOfFoot.empty() && tileInFrontOfFoot.intersects(boundingBox)) {
+        if (!tileInFrontOfFoot.empty() && tileInFrontOfFoot.intersects(boundingBox) && !tileInFrontOfFoot.isPassThrough()) {
             return oldX;
         }
 
@@ -244,21 +258,50 @@ public class Boy {
     }
 
     // Called every time the player presses the jump key
+    // Does nothing if the character is already jumping or falling
     public void startJumping() {
-        if (currentY - DISPLACEMENT >= 0) {
+
+        /*if (currentY - DISPLACEMENT >= 0) {
+        	jumping = true;
             currentY -= DISPLACEMENT;
             boundingBox.setLocation(currentX, currentY);
+            
+            jump_count = 0;
+        }*/
+    	if(!jumping && !falling) {
+    		jumping = true;
+    	}
+    	// Reinitialise the jump_count, useful to determine for how
+        // Much time the character is going to stay in the air
+        jump_count = 0;
+
+        // Sets the current jumping frame based on the last direction
+        if (facingDirection == KeyEvent.VK_RIGHT) {
+            currentFrame = run_R[2];
+        } else {
+            currentFrame = run_L[2];
         }
+    } 
+
     }
+
 
     // Increments the jumping counter and moves character up if jumping
     // Check the comments above 'jumping' and 'jump_count' variables
     // For more details
-    public void handleJumping() {
-        if (jumping) {
-            jump_count++;
+    public void handleJumping() {s
+    	if (jumping) {
+            if (jump_count < JUMP_COUNTER_THRESH
+                && currentY - DISPLACEMENT >= 0) {
+                currentY -= DISPLACEMENT;
+                boundingBox.setLocation(currentX, currentY);
+            }
 
-            if (jump_count >= JUMP_COUNTER_THRESH) {
+
+            jump_count++;
+            
+
+            if (jump_count >= JUMP_COUNTER_THRESH){
                 jumping = false;
                 jump_count = 0;
                 falling = true;
@@ -296,8 +339,8 @@ public class Boy {
             rightCornerBlock = World.map[upRow][upRightCornerCol];
         }
 
-        if ((leftCornerBlock != null && !leftCornerBlock.empty() && leftCornerBlock.intersects(boundingBox))
-            || (rightCornerBlock != null && !rightCornerBlock.empty() && rightCornerBlock.intersects(boundingBox))) {
+        if ((leftCornerBlock != null && !leftCornerBlock.empty() && leftCornerBlock.intersects(boundingBox) && !leftCornerBlock.isPassThrough())
+            || (rightCornerBlock != null && !rightCornerBlock.empty() && rightCornerBlock.intersects(boundingBox) && !rightCornerBlock.isPassThrough())) {
             // If an upper corner is intersecting a block, stop the jumping
             // phase
             // And start the falling phase, setting the jump_count to 0
@@ -357,8 +400,8 @@ public class Boy {
         // If both of the tiles below the character are thin air or beyond map
         // edge
         // Make the character fall down DISPLACEMENT units
-        if ((lowLeftBlock == null || lowLeftBlock.empty())
-            && (lowRightBlock == null || lowRightBlock.empty())) {
+        if ((lowLeftBlock == null || lowLeftBlock.empty() || lowLeftBlock.isPassThrough())
+            && (lowRightBlock == null || lowRightBlock.empty() || lowRightBlock.isPassThrough())) {
             falling = true;
             currentY += DISPLACEMENT;
             boundingBox.setLocation(currentX, currentY);
