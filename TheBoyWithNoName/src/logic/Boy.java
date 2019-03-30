@@ -126,6 +126,9 @@ public class Boy {
 
         idle = true;
     }
+    
+    private int pearlCounter=0;
+    private final int MAX_PEARL_NUMBER=20;
 
     public Boy() {
         // Initialise the buffers that will store the run sprites
@@ -146,7 +149,7 @@ public class Boy {
                                              Settings.BOY_SPRITE_WIDTH,
                                              Settings.BOY_SPRITE_HEIGHT);
 
-            for (int i = 0; i < Settings.BOY_RUN_FRAMES; i++) {
+                 for (int i = 0; i < Settings.BOY_RUN_FRAMES; i++) {
                 run_R[i] = spritesheet.getSubimage((i + 1) * Settings.BOY_SPRITE_WIDTH,
                                                    0,
                                                    Settings.BOY_SPRITE_WIDTH, 
@@ -239,7 +242,7 @@ public class Boy {
         if (!tileInFrontOfFoot.empty() && tileInFrontOfFoot.intersects(boundingBox) && !(tileInFrontOfFoot instanceof PassThroughBlock)) {
         	if(tileInFrontOfFoot instanceof Pearl) {
         		eat((Pearl) tileInFrontOfFoot);
-        		
+        		return newX;
         	}
             return oldX;
         }
@@ -408,8 +411,15 @@ public class Boy {
         life--;
     }
     
-    private void eat(Pearl fish) {
-    	fish.die();
+    private void eat(Pearl pearl) {
+    	pearl.die();
+    	pearlCounter+=1;
+    }
+    
+    public boolean finish() {
+    	if(pearlCounter==MAX_PEARL_NUMBER) {
+    		return false;
+    	} return true;
     }
 
     /* ******* */
