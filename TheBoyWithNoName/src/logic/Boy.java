@@ -244,21 +244,34 @@ public class Boy {
     }
 
     // Called every time the player presses the jump key
+    // Does nothing if the character is already jumping or falling
     public void startJumping() {
-        if (currentY - DISPLACEMENT >= 0) {
+        /*if (currentY - DISPLACEMENT >= 0) {
+        	jumping = true;
             currentY -= DISPLACEMENT;
             boundingBox.setLocation(currentX, currentY);
-        }
-    }
+            
+            jump_count = 0;
+        }*/
+    	if(!jumping && !falling) {
+    		jumping = true;
+    	}
+    } 
 
     // Increments the jumping counter and moves character up if jumping
     // Check the comments above 'jumping' and 'jump_count' variables
     // For more details
     public void handleJumping() {
-        if (jumping) {
+    	if (jumping) {
+            if (jump_count < JUMP_COUNTER_THRESH
+                && currentY - DISPLACEMENT >= 0) {
+                currentY -= DISPLACEMENT;
+                boundingBox.setLocation(currentX, currentY);
+            }
+
             jump_count++;
 
-            if (jump_count >= JUMP_COUNTER_THRESH) {
+            if (jump_count >= JUMP_COUNTER_THRESH){
                 jumping = false;
                 jump_count = 0;
                 falling = true;
