@@ -36,8 +36,8 @@ public class Boy {
     /* **************************** */
 
     // The initial position of the character
-    public static final int BOY_START_X = 2 * Settings.TILE_SIZE;
-    public static final int BOY_START_Y = 6 * Settings.TILE_SIZE;
+    public static final int BOY_START_X = 0 * Settings.TILE_SIZE;
+    public static final int BOY_START_Y = 7 * Settings.TILE_SIZE;
     // The current position of the character
     private int currentX;
     private int currentY;
