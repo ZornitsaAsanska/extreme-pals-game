@@ -1,12 +1,14 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import intermediary.Settings;
@@ -21,11 +23,11 @@ public class StatsPanel extends JPanel {
     private static final int HEARTS_START_X    = 84;
     private static final int HEARTS_START_Y    = 4;
     private static final int HEARTS_SIZE       = 32;
-
+    
     private BufferedImage livingHeart;
     private BufferedImage deadHeart;
     private BufferedImage background;
-
+    
     private Boy boy;
 
     public StatsPanel() {
@@ -34,7 +36,7 @@ public class StatsPanel extends JPanel {
         this.setLayout(null);
 
         try {
-            background  = ImageIO.read(getClass().getResource("/images/statsBar.png"));
+            //background  = ImageIO.read(getClass().getResource("/images/statsBar.png"));
             livingHeart = ImageIO.read(getClass().getResource("/images/livingHeart.png"));
             deadHeart   = ImageIO.read(getClass().getResource("/images/deadHeart.png"));
         } catch (IOException e) {
@@ -50,15 +52,17 @@ public class StatsPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        g2.drawImage(background, 0, 0, Settings.WINDOW_WIDTH - LEFT_MARGIN, Settings.STATS_PANEL_HEIGHT, null);
-
+        
+        g2.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
+        g2.setColor(Color.WHITE);
+        g2.drawString("Score: ",10, 30);
+        
         if (boy != null) {
             for (int i = 0; i < boy.MAX_LIFE; ++i) {
                 if (boy.getLife() > i) {
-                    g2.drawImage(livingHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
+                    //g2.drawImage(livingHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
                 } else {
-                    g2.drawImage(deadHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
+                    //g2.drawImage(deadHeart, HEARTS_START_X + HEARTS_X_DISTANCE * i, HEARTS_START_Y, HEARTS_SIZE, HEARTS_SIZE, null);
                 }
             }
         }
