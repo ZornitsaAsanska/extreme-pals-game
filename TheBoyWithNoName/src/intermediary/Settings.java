@@ -4,7 +4,7 @@ public class Settings {
     /* Game Frame properties */
     public static final int    WINDOW_WIDTH  = 1280;
     public static final int    WINDOW_HEIGHT = 640;
-    public static final String WINDOW_TITLE  = "The Boy With No Name";
+    public static final String WINDOW_TITLE  = "The Butterfly-Crab";
 
     /* Panel properties */
     // Height of the terrain in pixels = the distance of the boy's feet
