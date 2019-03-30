@@ -11,13 +11,12 @@ public class Block {
     private int col;
     private Tile tile;
     private Rectangle boundingBox;
-    private final boolean passthrough; // determining whether the character can pass through the block
+ // determining whether the character can pass through the block
 
-    public Block(int row, int col, Tile tile, boolean passthrough) {
+    public Block(int row, int col, Tile tile) {
         this.row = row * Settings.TILE_SIZE;
         this.col = col * Settings.TILE_SIZE;
         this.tile = tile;
-        this.passthrough = passthrough;
         this.boundingBox = new Rectangle(col * Settings.TILE_SIZE,
                                          row * Settings.TILE_SIZE,
                                          Settings.TILE_SIZE,
@@ -43,7 +42,8 @@ public class Block {
     public Rectangle getBoundingBox() {
         return boundingBox;
     }
-    public boolean isPassThrough() {
-    	return passthrough;
+    
+    protected void setTile(Tile tile) {
+    	this.tile = tile;
     }
 }
