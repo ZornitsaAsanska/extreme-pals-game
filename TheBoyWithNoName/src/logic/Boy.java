@@ -416,10 +416,10 @@ public class Boy {
     	pearlCounter+=1;
     }
     
-    public boolean finish() {
+    public boolean collectedAll() {
     	if(pearlCounter==MAX_PEARL_NUMBER) {
-    		return false;
-    	} return true;
+    		return true;
+    	} return false;
     }
 
     /* ******* */
